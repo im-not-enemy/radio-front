@@ -1,7 +1,7 @@
 <template>
-    <div id="card" v-bind:class="color" v-on:click="switchModal">
+    <div id="card" v-bind:class="color" v-on:click="switchModal" v-if="deleted===false">
         <div id="modal" v-if="modal">
-            <Detail v-bind:data="{program,progress,time}"></Detail>
+            <Detail v-bind:data="{program,progress,time}" v-on:deleted="remove"></Detail>
         </div>
 
         <div class="container">
@@ -36,7 +36,8 @@ export default {
             modal: false,
             now: parseInt(moment().format('YYYYMMDDHHmmss')),
             radioBase: settings.radiobase.timetable,
-            audio: settings.radiobase.audio
+            audio: settings.radiobase.audio,
+            deleted: false
         }
     },
     computed: {
@@ -101,6 +102,10 @@ export default {
                 this.modal = true
                 console.log("[ProgramCard] switchModal: false > true (" + this.program.id + ")")
             }
+        },
+        remove: function(){
+            this.switchModal()
+            this.deleted = true
         }
     }
 }

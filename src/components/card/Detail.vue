@@ -26,7 +26,8 @@
                     <button v-on:click.stop="cancel(program.id)">CANCEL</button>
                 </div>
                 <div v-if="program.status==='RECORDED'">
-                    <button v-on:click.stop="download(program.id)">DOWNLOAD</button>
+                    <button v-on:click.stop="download(program.id)">DOWNLOAD</button><br>
+                    <button v-on:click.stop="remove(program.id)" class="btn-mini">DEL</button>
                 </div>
             </div>
         </div>
@@ -99,6 +100,13 @@ export default {
         },
         download: function(id){
             location.href = this.audio+id+"/_download"
+        },
+        remove: function(id){
+            const result = confirm("番組データを完全に削除しますか?")
+            if (result){
+                axios.delete(this.audio+id).then((res)=>{console.log(res)})
+                this.$emit('deleted')
+            }
         },
         update: function(id){
             axios.get(this.timetable+id+"?fields=status").then((res)=>{
@@ -206,5 +214,15 @@ button {
     width: 150px;
     height: 50px;
     margin-bottom: 5px;
+}
+.btn-mini{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background-color: #993300;
+    width: 40px;
+    height: 30px;
+    padding: 0px;
+    margin: 10px;
 }
 </style>
