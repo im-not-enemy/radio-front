@@ -46,7 +46,8 @@ export default {
         return {
             state: "head",
             now: parseInt(moment().format('YYYYMMDDHHmmss')),
-            radioBase: settings.radiobase.timetable
+            radioBase: settings.radiobase.timetable,
+            audio: settings.radiobase.audio
         }
     },
     computed: {
@@ -141,7 +142,7 @@ export default {
             })
         },
         download: function(id){
-            location.href = this.radioBase+id+"/_download"
+            location.href = this.audio+id+"/_download"
         },
         update: function(id){
             axios.get(this.radioBase+id+"?fields=status").then((res)=>{
