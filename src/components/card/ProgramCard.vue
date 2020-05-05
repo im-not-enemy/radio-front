@@ -1,27 +1,12 @@
 <template>
-    <div id="card" v-on:click="reverse" v-bind:class="color">
+    <div id="card" v-bind:class="color" v-on:click="switchModal">
+        <div id="modal" v-if="modal">
+            <Detail v-bind:data="{program,progress,time}"></Detail>
+        </div>
+
         <div class="container">
             <div class="item">
-                <img v-bind:src="program.img" v-if="state==='head'">
-                <div class="buttonCover" v-if="state==='tail'">
-                    <div v-if="program.status==='DEFAULT'">
-                        <div v-if="progress==='WAITING'">
-                            <button v-on:click="reserve(program.id)">RESERVE</button>
-                        </div>
-                        <div v-if="progress==='BROADCASTING'">
-                            <button v-on:click="recording(program.id)">RECORDING</button>
-                        </div>
-                    </div>
-                    <div v-if="program.status==='RECORDING'">
-                        <button v-on:click="stop(program.id)">STOP</button>
-                    </div>
-                    <div v-if="program.status==='RESERVED'">
-                        <button v-on:click="cancel(program.id)">CANCEL</button>
-                    </div>
-                    <div v-if="program.status==='RECORDED'">
-                        <button v-on:click="download(program.id)">DOWNLOAD</button>
-                    </div>
-                </div>
+                <img v-bind:src="program.img">
             </div>
             <div class="item">
                 <h1>{{title}}</h1>
@@ -34,17 +19,21 @@
 </template>
 
 <script>
+import Detail from './Detail'
 import * as moment from "moment/moment.js"
 import axios from 'axios'
 import settings from '../../data/settings'
 
 export default {
+    components: {
+        Detail
+    },
     props: {
         program: Object
     },
     data: function(){
         return {
-            state: "head",
+            modal: false,
             now: parseInt(moment().format('YYYYMMDDHHmmss')),
             radioBase: settings.radiobase.timetable,
             audio: settings.radiobase.audio
@@ -77,7 +66,7 @@ export default {
             return {
                 waiting: this.progress === "WAITING",
                 broadcasting: this.progress === "BROADCASTING",
-                broadcasted: this.progress === "BROADCASTED" 
+                broadcasted: this.progress === "BROADCASTED"
             }
         },
         statusBadge: function(){
@@ -104,61 +93,34 @@ export default {
                 return origin.join('')
             }
         },
-        reverse: function(){
-            if (this.state == "head"){
-                this.state = "tail"
-            } else if (this.state == "tail"){
-                this.state = "head"
+        switchModal: function(){
+            if (this.modal){
+                this.modal = false
+                console.log("[ProgramCard] switchModal: true > false (" + this.program.id + ")")
+            } else if (!this.modal){
+                this.modal = true
+                console.log("[ProgramCard] switchModal: false > true (" + this.program.id + ")")
             }
-            console.log("status:" + this.program.status)
-            console.log("progress:" + this.progress)
-            console.log("now:" + this.now)
-            console.log("startTime:" + this.program.startTime)
-            console.log("endTime:" + this.program.endTime)
-            console.log("[ProgramCard] newState: " + this.state + " (" + this.title + ")")
-        },
-        recording: function(id){
-            axios.post(this.radioBase+id+"/_recording").then((res)=>{
-                console.log(res)
-                this.update(id)
-            })
-        },
-        stop: function(id){
-            axios.delete(this.radioBase+id+"/_recording").then((res)=>{
-                console.log(res)
-                this.update(id)
-            })
-        },
-        reserve: function(id){
-            axios.post(this.radioBase+id+"/_reservation").then((res)=>{
-                console.log(res)
-                this.update(id)
-            })
-        },
-        cancel: function(id){
-            axios.delete(this.radioBase+id+"/_reservation").then((res)=>{
-                console.log(res)
-                this.update(id)
-            })
-        },
-        download: function(id){
-            location.href = this.audio+id+"/_download"
-        },
-        update: function(id){
-            axios.get(this.radioBase+id+"?fields=status").then((res)=>{
-                const raw = res.data[0]
-                if (raw.status) {
-                    console.log("new status: " + raw.status) 
-                    this.program.status = raw.status
-                }
-            })
-            this.now = parseInt(moment().format('YYYYMMDDhhmmss'))
         }
     }
 }
 </script>
 
 <style scoped>
+/* ---------------------------------- */
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.8);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 /* ---------------------------------- */
 #card {
     margin: 3px;
@@ -205,16 +167,6 @@ export default {
 }
 .item {
     margin: 2px;
-}
-.buttonCover {
-    display: flex;
-    align-items: center;
-    height: 75px;
-    width: 120px;
-}
-button{
-    height: 70px;
-    width: 115px;
 }
 img {
     width: 120px;
