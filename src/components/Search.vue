@@ -125,7 +125,7 @@ export default {
     left: 0px;
     height: 60px;
     width: 100%;
-    background-color: slategray;
+    background-color: white;
     padding-left: 10px;
 }
 #cardSlot {
