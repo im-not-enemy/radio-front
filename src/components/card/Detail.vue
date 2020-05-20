@@ -24,6 +24,7 @@
                 </div>
                 <div v-if="program.status==='RESERVED'">
                     <button v-on:click.stop="cancel(program.id)">CANCEL</button>
+                    <AutoReserveSelector v-bind:id="program.id"></AutoReserveSelector>
                 </div>
                 <div v-if="program.status==='RECORDED'">
                     <button v-on:click.stop="download(program.id)">DOWNLOAD</button><br>
@@ -38,8 +39,12 @@
 import settings from '../../data/settings'
 import axios from 'axios'
 import * as moment from "moment/moment.js"
+import AutoReserveSelector from '../selector/AutoReserveSelector'
 
 export default {
+    components: {
+        AutoReserveSelector
+    },
     props: {
         data: Object
     },
