@@ -52,8 +52,7 @@ a:visited {
     height: 110px;
     width: 100%;
     text-align: center;
-    margin: 0px 0px 10px 0px;
-    padding: 0px;
+    padding: 0px 0px 10px 0px;
     background-color: white;
 }
 .content {

@@ -129,7 +129,7 @@ export default {
 /* ---------------------------------- */
 #card {
     margin: 1px;
-    width: 360px;
+    width: 345px;
 }
 .waiting {
 /*    border: solid #005FFF; */

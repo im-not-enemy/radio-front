@@ -2,7 +2,7 @@
     <div id="footer">
         <div class="container">
             <DateSelector v-on:selected="sendDate"></DateSelector>
-            <StationSelector v-on:selected="sendStation"></StationSelector>
+<!--            <StationSelector v-on:selected="sendStation"></StationSelector> -->
         </div>
     </div>
 </template>
