@@ -160,7 +160,7 @@ export default {
     overflow: auto;
 }
 #stationLogo {
-    width: 33%;
+    width: 80px;
 }
 #programLogo {
     width: 240px;

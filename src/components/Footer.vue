@@ -32,7 +32,6 @@ export default {
 #footer {
     position: fixed;
     bottom: 0px;
-    left: 0px;
     height: 60px;
     width: 100%;
     background-color: white;

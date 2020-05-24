@@ -2,6 +2,7 @@
     <div id="search">
         <div id="cardSlot">
             <ProgramCard v-for="program in programs" v-bind:key="program.id" v-bind:program="program"></ProgramCard>
+            <div v-if="programs.length==0" class="noContent">No content.</div>
         </div>
         <div id="footer" class="container">
             <div class="item">
@@ -12,7 +13,6 @@
                 <button v-on:click="open">option</button>
             </div>
         </div>
-
         <div id="options" v-if="openOption" class="container">
             <div class="item">
                 target: 
@@ -119,10 +119,16 @@ export default {
 </script>
 
 <style scoped>
+.noContent {
+    text-align: center;
+    width: 360px;
+    color: gray;
+    padding-bottom: 50%;
+    padding-top: 50%;
+}
 #footer {
     position: fixed;
     bottom: 0px;
-    left: 0px;
     height: 60px;
     width: 100%;
     background-color: white;

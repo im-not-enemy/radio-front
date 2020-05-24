@@ -49,10 +49,10 @@ export default {
             return date + " " + start + "-" + end
         },
         title: function(){
-            return this.reduce(this.program.title,18)
+            return this.reduce(this.program.title,22)
         },
         performer: function(){
-            return this.reduce(this.program.performer,20)
+            return this.reduce(this.program.performer,26)
         },
         progress: function(){
             if (this.now < this.program.startTime){
@@ -128,28 +128,32 @@ export default {
 }
 /* ---------------------------------- */
 #card {
-    margin: 3px;
+    margin: 1px;
+    width: 360px;
 }
 .waiting {
-    border: solid #005FFF;
-    background-color: #CCFFFF;
+/*    border: solid #005FFF; */
+/*    background-color: #CCFFFF; */
+    background-color: #D7EEFF;
 }
 .broadcasting {
-    border: solid #FF4F02;
+/*    border: solid #FF4F02; */
     background-color: #FFFFDD;
 }
 .broadcasted {
-    border: solid #333333;
+/*    border: solid #333333; */
     background-color: #DDDDDD;
 }
 /* ---------------------------------- */
 #statusBadge {
+    display: flex;
     font-weight: bold;
     font-size: 5px;
-    height: 10px;
+    height: 15px;
     width: 50px;
-    text-align: center;
     margin-top: 4px;
+    justify-content: center;
+    align-items: center;
 }
 .default {
     background-color: #D7EEFF
@@ -188,7 +192,7 @@ h2 {
 }
 h3 {
     font-size: 9px;
-    color: #00CCFF;
+    color: gray;
     font-weight: bold;
     margin: 4px 0px 2px 1px;
 }

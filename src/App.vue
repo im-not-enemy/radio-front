@@ -39,6 +39,13 @@ export default {
 </script>
 
 <style scoped>
+a.router-link-active {
+    font-weight: bold;
+}
+a:visited {
+    color: #333333;
+    
+}
 .header {
     position: fixed;
     top: 0px;
@@ -50,10 +57,13 @@ export default {
     background-color: white;
 }
 .content {
+    display: flex;
+    justify-content: center;
     padding-top: 110px;
 }
 h1 {
     margin-top: 5px;
     margin-bottom: 3px;
+    color: #333333;
 }
 </style>
