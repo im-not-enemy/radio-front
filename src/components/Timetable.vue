@@ -1,7 +1,9 @@
 <template>
     <div id="timetable" v-touch:swipe="changeStation">
         <div id="stationName">
-            <span class="pre">{{pre}}</span> --- <span class="active">{{active}}</span> --- <span class="next">{{next}}</span>
+            <img v-bind:src="pre">
+            <img class="active" v-bind:src="active">
+            <img v-bind:src="next">
         </div>
         <div class="ajust">
             <ProgramCardSlot v-bind:date="date" v-bind:station="station"></ProgramCardSlot>
@@ -51,7 +53,6 @@ export default {
                 }
             }
             this.station = this.stations[this.activeIndex].id
-            console.log(this.activeIndex)
         },
         fetch: function(){
             axios.get(settings.radiobase.stations)
@@ -61,7 +62,8 @@ export default {
                 for (let i=0; i<origin.length; i++){
                     stations.push({
                         id: origin[i].id[0],
-                        name: origin[i].name[0]
+                        name: origin[i].name[0],
+                        logo: origin[i].logo[0]._
                     })
                 }
                 this.stations = stations
@@ -72,16 +74,16 @@ export default {
     },
     watch: {
         activeIndex: function(){
-            this.active = this.stations[this.activeIndex].name
+            this.active = this.stations[this.activeIndex].logo
             if(this.activeIndex===0){
-                this.pre = this.stations[this.stations.length-1].name
+                this.pre = this.stations[this.stations.length-1].logo
             }else{
-                this.pre = this.stations[this.activeIndex-1].name
+                this.pre = this.stations[this.activeIndex-1].logo
             }
             if(this.activeIndex===this.stations.length-1){
-                this.next = this.stations[0].name
+                this.next = this.stations[0].logo
             }else{
-                this.next = this.stations[this.activeIndex+1].name
+                this.next = this.stations[this.activeIndex+1].logo
             }
         }
     },
@@ -95,22 +97,24 @@ export default {
 #timetable {
     margin-bottom: 60px;
 }
+img {
+    height: 25px;
+    width: 50px;
+}
+.active {
+    height: 50px;
+    width: 100px;
+}
 #stationName {
     position: fixed;
     text-align: center;
-    width: 361px;
-    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 348px;
     background-color: white;
     color: #333333;
-}
-.pre {
-    font-size: 10px;
-}
-.active {
-    font-size: 15px;
-}
-.next {
-    font-size: 10px;
 }
 .ajust {
     padding-top: 30px;
