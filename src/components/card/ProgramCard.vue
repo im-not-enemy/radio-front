@@ -49,7 +49,7 @@ export default {
             return date + " " + start + "-" + end
         },
         title: function(){
-            return this.reduce(this.program.title,22)
+            return this.reduce(this.program.title,20)
         },
         performer: function(){
             return this.reduce(this.program.performer,26)
