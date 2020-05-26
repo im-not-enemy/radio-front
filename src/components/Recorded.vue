@@ -20,7 +20,7 @@ export default {
     },
     methods: {
         fetch: function(){
-            axios.post(settings.radiobase.timetable + '_search?fields=id,title,status,performer,date,startTime,endTime,img',{status:"RECORDED"})
+            axios.post(settings.radiobase.timetable + '_search?fields=id,title,status,performer,date,startTime,endTime,img,downloaded',{status:"RECORDED"})
             .then((res)=>{
                 res.data.sort((a,b)=>{
                     if(a.startTime > b.startTime) return -1

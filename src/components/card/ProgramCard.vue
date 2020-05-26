@@ -12,7 +12,10 @@
                 <h1>{{title}}</h1>
                 <h2>{{performer}}</h2>
                 <h3>{{time}}</h3>
-                <div id="statusBadge" v-bind:class="statusBadge">{{program.status}}</div>
+                <div class="container">
+                    <div class="statusBadge" v-bind:class="statusBadge">{{program.status}}</div>
+                    <div v-if="program.downloaded===0" class="statusBadge new">new</div>
+                </div>
             </div>
         </div>
     </div>
@@ -94,14 +97,15 @@ export default {
                 return origin.join('')
             }
         },
+        update: function(){
+            axios.get(settings.radiobase.timetable+this.program.id+"?fields=downloaded")
+            .then((res,err)=>{
+                this.program.downloaded = res.data[0].downloaded
+            })
+        },
         switchModal: function(){
-            if (this.modal){
-                this.modal = false
-                console.log("[ProgramCard] switchModal: true > false (" + this.program.id + ")")
-            } else if (!this.modal){
-                this.modal = true
-                console.log("[ProgramCard] switchModal: false > true (" + this.program.id + ")")
-            }
+            this.modal = !this.modal
+            if(this.modal===false) this.update()
         },
         remove: function(){
             this.switchModal()
@@ -145,7 +149,7 @@ export default {
     background-color: #DDDDDD;
 }
 /* ---------------------------------- */
-#statusBadge {
+.statusBadge {
     display: flex;
     font-weight: bold;
     font-size: 5px;
@@ -169,6 +173,11 @@ export default {
 }
 .error {
     background-color: #663366
+}
+.new {
+    margin-left: 2px;
+    background-color: black;
+    color: whitesmoke;
 }
 /* ---------------------------------- */
 .container {
