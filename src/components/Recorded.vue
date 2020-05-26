@@ -23,8 +23,8 @@ export default {
             axios.post(settings.radiobase.timetable + '_search?fields=id,title,status,performer,date,startTime,endTime,img',{status:"RECORDED"})
             .then((res)=>{
                 res.data.sort((a,b)=>{
-                    if(a.startTime < b.startTime) return -1
-                    if(a.startTime > b.startTime) return 1
+                    if(a.startTime > b.startTime) return -1
+                    if(a.startTime < b.startTime) return 1
                     return 0
                 })
                 this.programs = res.data
