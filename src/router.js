@@ -6,6 +6,7 @@ import recorded from './components/Recorded'
 import reserved from './components/Reserved'
 import timetable from './components/Timetable'
 import search from './components/Search'
+import autoReserve from './components/AutoReserve'
 
 Vue.use(Router)
 
@@ -30,6 +31,10 @@ export default new Router({
         {
             path: '/search',
             component: search
-        }
+        },
+        {
+            path: '/autoReserve',
+            component: autoReserve
+        },
     ]
 })

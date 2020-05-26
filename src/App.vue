@@ -6,7 +6,8 @@
             <router-link to="/search"><span v-on:click="hideTop">search</span></router-link><br>
             <router-link to="/recording"><span v-on:click="hideTop">recording</span></router-link>  |
             <router-link to="/reserved"><span v-on:click="hideTop">reserved</span></router-link>  |
-            <router-link to="/recorded"><span v-on:click="hideTop">recorded</span></router-link>
+            <router-link to="/recorded"><span v-on:click="hideTop">recorded</span></router-link><br> 
+            <router-link to="/autoReserve"><span v-on:click="hideTop">autoReserve</span></router-link>
         </div>
         <div class="content">
             <router-view v-if="!topPage"></router-view>
@@ -49,7 +50,7 @@ a:visited {
 .header {
     position: fixed;
     top: 0px;
-    height: 110px;
+    height: 125px;
     width: 100%;
     text-align: center;
     padding: 0px 0px 10px 0px;
@@ -58,7 +59,7 @@ a:visited {
 .content {
     display: flex;
     justify-content: center;
-    padding-top: 110px;
+    padding-top: 125px;
 }
 h1 {
     margin-top: 5px;
