@@ -1,9 +1,9 @@
 <template>
     <div id="timetable" v-touch:swipe="changeStation">
         <div id="stationName">
-            <img v-bind:src="pre">
-            <img class="active" v-bind:src="active">
-            <img v-bind:src="next">
+            <img v-bind:src="pre.logo" v-on:click="changeStation('right')">
+            <img class="active" v-bind:src="active.logo">
+            <img v-bind:src="next.logo" v-on:click="changeStation('left')">
         </div>
         <div class="ajust">
             <ProgramCardSlot v-bind:date="date" v-bind:station="station"></ProgramCardSlot>
@@ -74,16 +74,16 @@ export default {
     },
     watch: {
         activeIndex: function(){
-            this.active = this.stations[this.activeIndex].logo
+            this.active = this.stations[this.activeIndex]
             if(this.activeIndex===0){
-                this.pre = this.stations[this.stations.length-1].logo
+                this.pre = this.stations[this.stations.length-1]
             }else{
-                this.pre = this.stations[this.activeIndex-1].logo
+                this.pre = this.stations[this.activeIndex-1]
             }
             if(this.activeIndex===this.stations.length-1){
-                this.next = this.stations[0].logo
+                this.next = this.stations[0]
             }else{
-                this.next = this.stations[this.activeIndex+1].logo
+                this.next = this.stations[this.activeIndex+1]
             }
         }
     },
