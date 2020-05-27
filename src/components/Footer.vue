@@ -33,7 +33,7 @@ export default {
     position: fixed;
     left: 0px;
     bottom: 0px;
-    height: 60px;
+    height: 40px;
     width: 100%;
     background-color: white;
 }
