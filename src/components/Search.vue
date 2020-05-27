@@ -5,14 +5,46 @@
             <div v-if="programs.length==0" class="noContent">No content.</div>
         </div>
         <div id="footer" class="container">
-            <div class="item">
-                <input v-model="keyword" placeholder="type keyword"><br>
-                <button v-on:click="search">submit</button>
-            </div>
-            <div class="item">
-                <button v-on:click="open">option</button>
+            <div class="container">
+                <div>
+                    <input v-model="keyword" placeholder="type keyword"><br>
+                    <button v-on:click="search">submit</button>
+                </div>
+                <div>
+                    <button v-on:click="switchOption">option</button>
+                </div>
+                <div id="options" v-if="showOption">
+                    <div class="item">
+                        target: 
+                        <select v-model="target">
+                            <option>title</option>
+                            <option>performer</option>
+                            <option>info</option>
+                            <option>desc</option>
+                        </select><br>
+
+                        status: 
+                        <select v-model="status">
+                            <option>all</option>
+                            <option>DEFAULT</option>
+                            <option>RECORDING</option>
+                            <option>RECORDED</option>
+                            <option>RESERVED</option>
+                            <option>ERROR</option>
+                        </select><br>
+
+                        progress: 
+                        <select v-model="progress">
+                            <option>all</option>
+                            <option>WAITING</option>
+                            <option>BROADCASTING</option>
+                            <option>BROADCASTED</option>
+                        </select><br>
+                    </div>
+                </div>
             </div>
         </div>
+        <!--
         <div id="options" v-if="openOption" class="container">
             <div class="item">
                 target: 
@@ -44,6 +76,7 @@
                 <button v-on:click="close">close</button>
             </div>
         </div>
+        -->
     </div>
 </template>
 
@@ -64,7 +97,7 @@ export default {
             target: "title",
             status: "all",
             progress: "all",
-            openOption: false,
+            showOption: false,
         }
     },
     methods: {
@@ -72,9 +105,14 @@ export default {
             const now = parseInt(moment().format('YYYYMMDDHHmmss'))
             let startTimeComparison = {}
             let endTimeComparison = {}
+            let status
 
             if (!this.keyword) return -1
-            if (this.status === "all") this.status = ""
+            if (this.status === "all"){
+                status = ""
+            } else {
+                status = this.status
+            }
             if (this.progress === "all"){
                 startTimeComparison = {$gt: 0}
                 endTimeComparison = {$lt: 99999999999999}
@@ -91,7 +129,7 @@ export default {
 
             const option = {
                 [this.target] : this.keyword,
-                status: this.status,
+                status: status,
                 startTime: startTimeComparison,
                 endTime: endTimeComparison
             }
@@ -108,11 +146,8 @@ export default {
                 //console.log(res.data)
             })
         },
-        open: function(){
-            this.openOption = true
-        },
-        close: function(){
-            this.openOption = false
+        switchOption: function(){
+            this.showOption = !this.showOption
         }
     }
 }
@@ -128,6 +163,7 @@ export default {
 }
 #footer {
     position: fixed;
+    left: 0px;
     bottom: 0px;
     height: 60px;
     width: 100%;
@@ -138,17 +174,23 @@ export default {
     padding-bottom: 60px;
 }
 #options {
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
-    height: 150px;
-    width: 65%;
-    padding-left: 20px;
-    background-color: gray;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+    right: 10px;
+    bottom: 50px;
+    height: 100px;
+    width: 220px;
+    background-color: #EEEEEE;
+    padding-left: 5px;
 }
 .container {
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 input {
     margin: 0px 10px 0px 0px;
