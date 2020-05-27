@@ -117,6 +117,6 @@ img {
     color: #333333;
 }
 .ajust {
-    padding-top: 30px;
+    padding-top: 50px;
 }
 </style>
