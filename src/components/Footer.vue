@@ -31,6 +31,7 @@ export default {
 <style scoped>
 #footer {
     position: fixed;
+    left: 0px;
     bottom: 0px;
     height: 60px;
     width: 100%;
@@ -38,8 +39,10 @@ export default {
 }
 .container {
     display: flex;
+    flex-direction: row;
     height: 100%;
     width: 100%;
     align-items: center;
+    justify-content: center;
 }
 </style>
