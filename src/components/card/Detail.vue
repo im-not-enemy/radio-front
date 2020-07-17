@@ -65,7 +65,8 @@ export default {
 
                 axios.get(this.stations)
                 .then((res)=>{
-                    const station = res.data.stations.station
+                    const station = res.data
+                    console.log(`######${station}#######`)
                     for (let i=0; i<Object.keys(station).length; i++){
                         if (station[i].id[0] === this.station){
                             this.stationLogo = station[i].logo[0]._

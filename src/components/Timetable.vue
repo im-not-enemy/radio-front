@@ -40,14 +40,14 @@ export default {
         },
         changeStation: function(direction){
             if(direction==="left"){
-                if(this.activeIndex===14){
+                if(this.activeIndex===15){
                     this.activeIndex = 0
                 }else{
                     this.activeIndex += 1
                 }
             }else if(direction==="right"){
                 if(this.activeIndex===0){
-                    this.activeIndex = 14
+                    this.activeIndex = 15
                 }else{
                     this.activeIndex -= 1
                 }
@@ -57,15 +57,7 @@ export default {
         fetch: function(){
             axios.get(settings.radiobase.stations)
             .then((res)=>{
-                const origin = res.data.stations.station
-                const stations = Array()
-                for (let i=0; i<origin.length; i++){
-                    stations.push({
-                        id: origin[i].id[0],
-                        name: origin[i].name[0],
-                        logo: origin[i].logo[0]._
-                    })
-                }
+                const stations = res.data
                 this.stations = stations
                 this.activeIndex = 0
                 this.station = stations[this.activeIndex].id
